@@ -3,7 +3,7 @@ port =  process.env.PORT || 9294
 express = require('express')
 fs = require('fs')
 Routes = require("./routes")
-Opfserver = require("opfserver")
+Opfserver = require("opfcli")
 
 ##Setup Server
 app = express.createServer()
