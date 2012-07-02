@@ -1,0 +1,121 @@
+#!/usr/bin/env node
+var argv = process.argv.slice(2),
+    fs   = require("fs"),
+    fd   = require("path");
+
+var optimist  = require('optimist');
+var path     = require('path');
+var Module   = require('module');
+var cs       = require("coffee-script");
+var path     = require('path');
+
+var Template = require("../src/template");
+var compilers = require('../server_src/compilers');
+var pck   = require('../server_src/package');
+var css   = require('../server_src/css');
+var jscompiler   = require('../server_src/jscompiler');
+
+
+var expandPath = function(path, dir){
+  if (fd.basename(path) == path)
+    path = dir + path  
+  return fd.normalize(path);
+};
+
+var camelize = function(str){
+  return str.replace(/-|_+(.)?/g, function(match, chr) {
+    return chr ? chr.toUpperCase() : '';
+  }).replace(/^(.)?/, function(match, chr) {
+    return chr ? chr.toUpperCase() : '';
+  });
+};
+
+var help = [
+    "OPF APP V:2",
+    "usage: opf [options] ",
+    "",
+    "Generates a opf app using the specified command-line options",
+    "",
+    "options:",
+    " app path          Generates a new OPF application",
+    " build             Builds JS and CSS mimified Assets"
+].join('\n');
+
+var generators = {};
+
+generators.app = generators.new = function(){
+  var template = __dirname + "/../templates/app";
+  var path     = fd.normalize(argv[1]);
+  
+  // Create parent dir
+  if (fd.existsSync(path)) throw(path + " already exists");
+  fs.mkdirSync(path, 0775);
+  
+  (new Template(template, path)).write();
+};
+
+generators.build = function(){
+  source = jscompiler.compile().compile(true);
+  fs.writeFileSync(path.join( './public' , '/application.js'), source)
+  
+  source = css.compile(function(content){
+    fs.writeFileSync(path.join( './public' , '/application.css' ), content)
+  },true);
+  
+};
+
+generators.mobile = function(){
+  var template = __dirname + "/../templates/mobile";
+  var path     = fd.normalize(argv[1]);
+  
+  // Create parent dir
+  if (fd.existsSync(path)) throw(path + " already exists");
+  fs.mkdirSync(path, 0775);
+  
+  (new Template(template, path)).write();
+};
+
+generators.controller = function(){
+  var template = __dirname + "/../templates/controller.coffee";
+  var values   = {name: camelize(fd.basename(argv[1]))};
+  var path     = expandPath(argv[1], "./app/controllers/") + ".coffee";
+  
+  (new Template(template, path, values)).write();
+  generators.controllerSpec();
+};
+
+generators.controllerSpec = function(){
+  if ( !fd.existsSync("./test/specs") ) return;
+  
+  var template = __dirname + "/../templates/spec.controller.coffee";
+  var values   = {name: camelize(fd.basename(argv[1]))};
+  values.path  = values.name.toLowerCase();
+  var path     = expandPath(argv[1], "./test/specs/controllers/") + ".coffee";
+  
+  (new Template(template, path, values)).write();
+};
+
+generators.model = function(){
+  var template = __dirname + "/../templates/model.coffee";
+  var values   = {name: camelize(fd.basename(argv[1]))};
+  var path     = expandPath(argv[1], "./app/models/") + ".coffee";
+  
+  (new Template(template, path, values)).write();
+  generators.modelSpec();
+};
+
+generators.modelSpec = function(){
+  if ( !fd.existsSync("./test/specs") ) return;
+
+  var template = __dirname + "/../templates/spec.model.coffee";
+  var values   = {name: camelize(fd.basename(argv[1]))};
+  values.path  = values.name.toLowerCase();
+  var path     = expandPath(argv[1], "./test/specs/models/") + ".coffee";
+  
+  (new Template(template, path, values)).write();
+};
+
+if (generators[argv[0]])
+  generators[argv[0]]();
+else
+  console.log(help);
