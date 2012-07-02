@@ -1,0 +1,47 @@
+!!! 5
+//if lt IE 7
+  <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en">
+  
+//if IE 7
+  <html class="no-js lt-ie9 lt-ie8" lang="en">
+  
+//if IE 8
+  <html class="no-js lt-ie9" lang="en">
+
+if useManifest
+  html(lang="en", manifest="manifest")  
+else
+    html(lang="en")
+  
+  head
+    meta(charset='utf-8')
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    
+    link(rel='stylesheet', href='/application.css', type='text/css', charset='utf-8')
+
+    title OPF
+    link(rel='apple-touch-icon', href='apple-touch-icon.png')
+    //link(rel='icon', type='image/ico', href='favicon.ico')
+
+    //if lt IE 9
+      <link rel="stylesheet" href="src/stylesheets/ie.css">
+    
+    //if lt IE 9
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  
+    
+    script(src='/application.js', type='text/javascript', charset='utf-8')
+      
+    script(type='text/javascript', charset='utf-8')
+      var jQuery  = require("jqueryify");
+      var exports = this;
+      jQuery(function(){
+        var App = require("index");
+        exports.app = new App({el: $("body")});      
+      });
+
+  body.nice
+    != body
+    
+      
