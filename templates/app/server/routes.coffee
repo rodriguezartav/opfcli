@@ -8,7 +8,7 @@ class Routes
   setupRoutes: ->
    #ROUTES GO HERE
    # @app.get "/", (req,res) ->
-   #  res.render "index" , {posts: Post.all() , tags: [] }
+   #  res.render "index"
       
    
 
