@@ -1,4 +1,4 @@
-Madmimi = require ('./libs/madmimi');
+Madmimi = require ('../libs/madmimi');
 jade = require('jade');
 
 

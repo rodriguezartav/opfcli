@@ -1,7 +1,7 @@
 port =  process.env.PORT || 9294
 
 express = require('express')
-RedisController = require('./redisController')
+#RedisController = require('./redisController')
 
 
 fs = require('fs')
