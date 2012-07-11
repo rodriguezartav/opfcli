@@ -1,12 +1,15 @@
 port =  process.env.PORT || 9294
 
 express = require('express')
+RedisController = require('./redisController')
+
+
 fs = require('fs')
 Routes = require("./routes")
 Opfserver = require("opfcli")
-#TwitterController = require('./twitterController')
-#EmailController = require('./emailController')
-#ParseController = require('./parseController')
+#TwitterController = require('./controllers/twitterController')
+#EmailController = require('./controllers/emailController')
+#ParseController = require('./controllers/parseController')
 
 
 
