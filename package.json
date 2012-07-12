@@ -1,7 +1,7 @@
 {
   "name": "opfcli",
   "description": "OPF Framework CLI",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "repository": {
     "type": "git",
     "url": "git://git@github.com:rodriguezartav/opfcli.git"

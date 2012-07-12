@@ -24,7 +24,7 @@ app.use express.cookieParser()
 app.set 'view engine'  , 'jade'
 app.set 'views' , './views'
 
-app.user Opfserver.middleware()      
+app.use Opfserver.middleware()      
 app.use(express.static("./public"))
 
 #new EmailController(app)
