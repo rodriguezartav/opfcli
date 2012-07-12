@@ -6,7 +6,7 @@
     "npm" : "~1.0.106"
   },
   "dependencies": { 
-    "opfcli"        :  "0.0.10",
+    "opfcli"        :  "0.0.15",
     "es5-shimify"   :  "~0.0.1",
     "json2ify"      :  "~0.0.1",
     "jqueryify"     :  "~0.0.1",
