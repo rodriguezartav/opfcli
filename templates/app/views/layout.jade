@@ -35,7 +35,7 @@ html(lang="en")
       var exports = this;
       jQuery(function(){
         var App = require("index");
-        exports.app = new App({el: $("body")});      
+        exports.app = new App({el: $("body") , message: "!{message}" } );      
       });
 
   body.nice

@@ -8,10 +8,8 @@ class App extends Spine.Controller
   @extend Spine.Controller.ModalController
 
   constructor: ->
-    super
+    super    
     @setupModal()
-    
-    @html require("views/layout")
 
     Spine.trigger "show_modal" , "general"
 
