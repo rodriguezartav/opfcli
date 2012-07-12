@@ -9,7 +9,7 @@ class GeneralModal extends Spine.Controller
   @type = "general"
 
   events:
-    "click .js_close" : "onClose"
+    "click .cancel" : "onClose"
 
   constructor: ->
     super
